@@ -21,15 +21,15 @@ export default async function DashboardHome() {
 
   return (
     <div>
-      <h1>Übersicht</h1>
-      <p style={{ color: "var(--text-muted)" }}>
-        Willkommen im Admin-Backend. Änderungen erscheinen sofort in der App.
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginTop: 20 }}>
+      <div className="page-header">
+        <h1>Übersicht</h1>
+        <p>Willkommen im Admin-Backend. Änderungen erscheinen sofort in der App.</p>
+      </div>
+      <div className="stat-grid">
         {cards.map((c) => (
-          <Link key={c.href} href={c.href} className="card" style={{ textDecoration: "none", color: "inherit" }}>
-            <div style={{ fontSize: 28, fontWeight: 800, color: "var(--green)" }}>{c.count}</div>
-            <div style={{ color: "var(--text-muted)", fontSize: 14 }}>{c.label}</div>
+          <Link key={c.href} href={c.href} className="card stat-card">
+            <span className="stat-value">{c.count}</span>
+            <span className="stat-label">{c.label}</span>
           </Link>
         ))}
       </div>
