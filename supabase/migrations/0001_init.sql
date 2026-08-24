@@ -143,41 +143,56 @@ alter table public.contacts enable row level security;
 alter table public.club_info enable row level security;
 
 -- Everyone (anon + authenticated) can read all public content.
+drop policy if exists "Public read teams" on public.teams;
 create policy "Public read teams" on public.teams for select using (true);
+drop policy if exists "Public read players" on public.players;
 create policy "Public read players" on public.players for select using (true);
+drop policy if exists "Public read news" on public.news;
 create policy "Public read news" on public.news for select using (true);
+drop policy if exists "Public read matches" on public.matches;
 create policy "Public read matches" on public.matches for select using (true);
+drop policy if exists "Public read sponsors" on public.sponsors;
 create policy "Public read sponsors" on public.sponsors for select using (true);
+drop policy if exists "Public read contacts" on public.contacts;
 create policy "Public read contacts" on public.contacts for select using (true);
+drop policy if exists "Public read club_info" on public.club_info;
 create policy "Public read club_info" on public.club_info for select using (true);
 
 -- Only signed-in users with a profile row (i.e. invited admins) can write.
+drop policy if exists "Admins can view own profile" on public.profiles;
 create policy "Admins can view own profile" on public.profiles for select using (auth.uid() = id);
 
+drop policy if exists "Admins manage teams" on public.teams;
 create policy "Admins manage teams" on public.teams for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins manage players" on public.players;
 create policy "Admins manage players" on public.players for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins manage news" on public.news;
 create policy "Admins manage news" on public.news for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins manage matches" on public.matches;
 create policy "Admins manage matches" on public.matches for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins manage sponsors" on public.sponsors;
 create policy "Admins manage sponsors" on public.sponsors for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins manage contacts" on public.contacts;
 create policy "Admins manage contacts" on public.contacts for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins manage club_info" on public.club_info;
 create policy "Admins manage club_info" on public.club_info for all
   using (exists (select 1 from public.profiles where id = auth.uid()))
   with check (exists (select 1 from public.profiles where id = auth.uid()));
@@ -189,14 +204,18 @@ insert into storage.buckets (id, name, public)
 values ('media', 'media', true)
 on conflict (id) do nothing;
 
+drop policy if exists "Public read media" on storage.objects;
 create policy "Public read media" on storage.objects for select
   using (bucket_id = 'media');
 
+drop policy if exists "Admins upload media" on storage.objects;
 create policy "Admins upload media" on storage.objects for insert
   with check (bucket_id = 'media' and exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins update media" on storage.objects;
 create policy "Admins update media" on storage.objects for update
   using (bucket_id = 'media' and exists (select 1 from public.profiles where id = auth.uid()));
 
+drop policy if exists "Admins delete media" on storage.objects;
 create policy "Admins delete media" on storage.objects for delete
   using (bucket_id = 'media' and exists (select 1 from public.profiles where id = auth.uid()));
