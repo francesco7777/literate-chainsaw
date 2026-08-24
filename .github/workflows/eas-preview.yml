@@ -1,0 +1,64 @@
+name: EAS Preview Update
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "mobile/**"
+      - ".github/workflows/eas-preview.yml"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Link EAS project (first run only)
+        run: npx eas-cli init --non-interactive --force || true
+
+      - name: Publish preview update
+        id: publish
+        run: |
+          npx eas-cli update --branch preview --message "Preview $(date -u +%Y-%m-%dT%H:%M:%SZ)" --non-interactive 2>&1 | tee update-output.txt
+
+      - name: Write summary
+        run: |
+          echo "## FC Erlinsbach – Vorschau bereit" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Öffne den Link unten in Expo Go (App vorher installieren):" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat update-output.txt >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit linked project id if changed
+        run: |
+          cd ..
+          if ! git diff --quiet -- mobile/app.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add mobile/app.json
+            git commit -m "Link EAS project id [skip ci]"
+            git push origin HEAD:main
+          fi
