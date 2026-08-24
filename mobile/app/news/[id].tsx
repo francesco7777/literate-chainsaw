@@ -54,9 +54,9 @@ export default function NewsDetailScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  image: { width: "100%", height: 220 },
-  body: { padding: 16, gap: 8 },
-  title: { fontSize: 22, fontWeight: "700", color: colors.text },
+  image: { width: "100%", height: 240 },
+  body: { padding: 20, gap: 8 },
+  title: { fontSize: 24, fontWeight: "800", color: colors.text, letterSpacing: -0.3 },
   meta: { fontSize: 13, color: colors.textMuted },
   content: { fontSize: 16, lineHeight: 24, color: colors.text, marginTop: 8 },
 });

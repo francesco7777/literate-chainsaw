@@ -27,14 +27,19 @@ export default function TeamsScreen() {
       {teams.length === 0 && !loading && <EmptyState message="Noch keine Teams erfasst." />}
       {teams.map((team) => (
         <Pressable key={team.id} style={styles.card} onPress={() => router.push(`/teams/${team.id}`)}>
-          <View>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{team.category[0]}</Text>
+          </View>
+          <View style={{ flex: 1 }}>
             <Text style={styles.name}>{team.name}</Text>
             <Text style={styles.meta}>
               {team.category}
               {team.league ? ` · ${team.league}` : ""}
             </Text>
           </View>
-          <Text style={styles.chevron}>›</Text>
+          <View style={styles.chevronWrap}>
+            <Text style={styles.chevron}>›</Text>
+          </View>
         </Pressable>
       ))}
     </Screen>
@@ -44,15 +49,30 @@ export default function TeamsScreen() {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.card,
-    borderRadius: 12,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
+    borderRadius: 16,
+    padding: 14,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    gap: 12,
   },
-  name: { fontSize: 17, fontWeight: "700", color: colors.text },
-  meta: { fontSize: 13, color: colors.textMuted, marginTop: 2 },
-  chevron: { fontSize: 24, color: colors.textMuted },
+  badge: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: colors.green,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: { color: colors.white, fontSize: 17, fontWeight: "800" },
+  name: { fontSize: 16, fontWeight: "800", color: colors.text },
+  meta: { fontSize: 13, color: colors.textMuted, marginTop: 2, fontWeight: "500" },
+  chevronWrap: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: colors.background,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  chevron: { fontSize: 18, color: colors.textMuted, fontWeight: "700" },
 });

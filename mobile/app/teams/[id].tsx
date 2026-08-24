@@ -53,7 +53,9 @@ export default function TeamDetailScreen() {
             {p.position ? <Text style={styles.meta}>{p.position}</Text> : null}
           </View>
           {p.jersey_number !== null && (
-            <Text style={styles.number}>{p.jersey_number}</Text>
+            <View style={styles.numberBadge}>
+              <Text style={styles.number}>{p.jersey_number}</Text>
+            </View>
           )}
         </View>
       ))}
@@ -68,15 +70,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     backgroundColor: colors.card,
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
   },
-  avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.background },
-  avatarPlaceholder: { alignItems: "center", justifyContent: "center" },
-  avatarInitials: { color: colors.blue, fontWeight: "700" },
-  name: { fontSize: 15, fontWeight: "600", color: colors.text },
-  meta: { fontSize: 12, color: colors.textMuted },
-  number: { fontSize: 18, fontWeight: "800", color: colors.red, minWidth: 28, textAlign: "right" },
+  avatar: { width: 46, height: 46, borderRadius: 23, backgroundColor: colors.background },
+  avatarPlaceholder: { alignItems: "center", justifyContent: "center", backgroundColor: colors.blue },
+  avatarInitials: { color: colors.white, fontWeight: "800", fontSize: 14 },
+  name: { fontSize: 15, fontWeight: "700", color: colors.text },
+  meta: { fontSize: 12, color: colors.textMuted, fontWeight: "500" },
+  numberBadge: {
+    minWidth: 32,
+    height: 32,
+    borderRadius: 10,
+    backgroundColor: colors.ink,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 6,
+  },
+  number: { fontSize: 15, fontWeight: "800", color: colors.onDark },
 });

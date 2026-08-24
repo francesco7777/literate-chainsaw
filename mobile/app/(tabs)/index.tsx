@@ -37,16 +37,17 @@ export default function NewsScreen() {
           onPress={() => router.push(`/news/${item.id}`)}
         >
           {item.image_url ? (
-            <Image source={{ uri: item.image_url }} style={styles.image} />
-          ) : null}
-          <View style={styles.cardBody}>
-            <Text style={styles.title}>{item.title}</Text>
+            <Image source={{ uri: item.image_url }} style={styles.image} resizeMode="cover" />
+          ) : (
+            <View style={styles.imageFallback} />
+          )}
+          <View style={styles.scrim}>
+            <Text style={styles.title} numberOfLines={2}>
+              {item.title}
+            </Text>
             <Text style={styles.meta}>
               {new Date(item.published_at).toLocaleDateString("de-CH")}
               {item.author ? ` · ${item.author}` : ""}
-            </Text>
-            <Text style={styles.excerpt} numberOfLines={2}>
-              {item.content}
             </Text>
           </View>
         </Pressable>
@@ -57,15 +58,20 @@ export default function NewsScreen() {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
+    borderRadius: 18,
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: colors.border,
+    backgroundColor: colors.ink,
+    minHeight: 200,
+    justifyContent: "flex-end",
   },
-  image: { width: "100%", height: 160 },
-  cardBody: { padding: 14, gap: 4 },
-  title: { fontSize: 17, fontWeight: "700", color: colors.text },
-  meta: { fontSize: 12, color: colors.textMuted },
-  excerpt: { fontSize: 14, color: colors.text, marginTop: 4 },
+  image: { ...StyleSheet.absoluteFillObject, width: undefined, height: undefined },
+  imageFallback: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.greenDark },
+  scrim: {
+    backgroundColor: "rgba(11,13,12,0.72)",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    gap: 4,
+  },
+  title: { fontSize: 18, fontWeight: "800", color: colors.onDark },
+  meta: { fontSize: 12, color: colors.onDarkMuted, fontWeight: "600" },
 });
