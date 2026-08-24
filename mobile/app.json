@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "runtimeVersion": {
       "policy": "appVersion"
     },
@@ -30,6 +32,20 @@
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c7607f1f-b335-453a-bfb3-1cba8f374136"
+      }
+    },
+    "owner": "fcerlinsbachs-team",
+    "updates": {
+      "url": "https://u.expo.dev/c7607f1f-b335-453a-bfb3-1cba8f374136"
+    }
   }
 }
