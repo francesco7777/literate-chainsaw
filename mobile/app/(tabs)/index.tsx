@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     minHeight: 200,
     justifyContent: "flex-end",
   },
-  image: { ...StyleSheet.absoluteFill, width: undefined, height: undefined },
-  imageFallback: { ...StyleSheet.absoluteFill, backgroundColor: colors.greenDark },
+  image: { ...StyleSheet.absoluteFillObject, width: undefined, height: undefined },
+  imageFallback: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.greenDark },
   scrim: {
     backgroundColor: "rgba(11,13,12,0.72)",
     paddingHorizontal: 16,
