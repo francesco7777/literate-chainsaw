@@ -44,7 +44,7 @@ jobs:
         id: publish
         run: |
           set -o pipefail
-          npx eas-cli update --branch preview --platform android,ios --message "Preview $(date -u +%Y-%m-%dT%H:%M:%SZ)" --non-interactive 2>&1 | tee update-output.txt
+          npx eas-cli update --branch preview --message "Preview $(date -u +%Y-%m-%dT%H:%M:%SZ)" --non-interactive 2>&1 | tee update-output.txt
 
       - name: Write summary
         run: |
