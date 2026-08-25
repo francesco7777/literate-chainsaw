@@ -35,7 +35,10 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Link EAS project (first run only)
-        run: npx eas-cli init --non-interactive --force || true
+        run: |
+          if ! grep -q '"projectId"' app.json; then
+            npx eas-cli init --non-interactive --force || true
+          fi
 
       - name: Publish preview update
         id: publish
