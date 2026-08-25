@@ -43,6 +43,9 @@
     "owner": "fcerlinsbachs-team",
     "updates": {
       "url": "https://u.expo.dev/c7607f1f-b335-453a-bfb3-1cba8f374136"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
