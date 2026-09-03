@@ -3,11 +3,14 @@
 import { mkdir, writeFile } from "node:fs/promises";
 
 const targets = [
-  {
-    name: "matchcenter",
-    url: "https://matchcenter.afv.ch/default.aspx?v=246&oid=5&lng=1&a=vs",
-  },
   { name: "fcerlinsbach-home", url: "https://fcerlinsbach.ch" },
+  { name: "fcerlinsbach-home-page2", url: "https://fcerlinsbach.ch/page/2/" },
+  { name: "kader-herren-1", url: "https://fcerlinsbach.ch/kader-herren-1/" },
+  { name: "kader-frauen-1", url: "https://fcerlinsbach.ch/kader-frauen-1/" },
+  { name: "kader-senioren-30", url: "https://fcerlinsbach.ch/kader-senioren-30/" },
+  { name: "kontakt", url: "https://fcerlinsbach.ch/kontakt/" },
+  { name: "vorstand", url: "https://fcerlinsbach.ch/vorstand-2/" },
+  { name: "sponsoring", url: "https://fcerlinsbach.ch/kategorie/sponsoring/" },
 ];
 
 await mkdir("out", { recursive: true });
