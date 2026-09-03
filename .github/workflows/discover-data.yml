@@ -6,6 +6,8 @@ on:
 jobs:
   discover:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -16,8 +18,11 @@ jobs:
       - name: Fetch source pages
         run: node scripts/discover.mjs
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: discovered-html
-          path: out/
-          retention-days: 3
+      - name: Push discovered HTML to a branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B data-discovery
+          git add -f out/
+          git commit -m "Discovered HTML $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+          git push -f origin data-discovery
