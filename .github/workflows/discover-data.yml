@@ -1,0 +1,23 @@
+name: Discover Data Sources
+
+on:
+  workflow_dispatch:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch source pages
+        run: node scripts/discover.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: discovered-html
+          path: out/
+          retention-days: 3
